@@ -101,4 +101,8 @@ dist
 .dynamodb/
 
 # TernJS port file
+<<<<<<< HEAD
 .tern-port
+=======
+.tern-port
+>>>>>>> aa0cc3ebd02d7a5be88e3d2eab0c49e46d009cef
