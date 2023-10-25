@@ -6,7 +6,7 @@ const uuid = require("uuid");
 const sessionIds = new Map(); ///Sesiones ID
 const excelJS = require('exceljs'); /// EXCEL PARA CHATS
 const moment = require('moment'); /// Para cotrolar el tiempo
-const fs = require('fs'); /// Para nose
+const fs = require('fs'); /// Filesystem
 const xlsx = require ('xlsx');
 const pkg = require('pkg');
 const enviarTracking = require('./utils')
@@ -27,18 +27,19 @@ venom
 function start(client) {
 
   leerExcel();
-  //carritoAbandonado(client);
+  carritoAbandonado(client);
   //enviarConfirmacion(client); // Para enviar confirmación del pedido a los clientes
   //enviarTracking(client); // Para enviar trackings a clientes sin numero de pedido
   
 
-  /*
+  /*console.log(client)
   client.onMessage( async (message) => {
 
 
       setSessionAndUser(message.from); /// Funcion para crear un ID único 
 
       let session = sessionIds.get(message.from); // Obtengo la credenciales
+      console.log(session)
       let payload = await dialogflow.sendToDialogFlow(message.body,session); // Mando el texto que mando el usuario a Diaglogflow
       let responses = payload.fulfillmentMessages;
 
@@ -124,23 +125,19 @@ const saveHistorial = (number, message) => {
 /// Mensaje automatico carrito abandonado
 
 const carritoAbandonado = async (client) => {
-  for (let index = 0; index < excelNumberOrder.length; index++) {
+  for (let index = 31; index < excelNumberOrder.length; index++) {
     const element = excelNumberOrder[index];
     const numberPhone = excelPhone[index];
     const name = excelClientName[index];
     const modelo = excelModel[index];
 
     
-    await client.sendText(`34${numberPhone}@c.us`,`Estimado/a ${name},\n
+    await client.sendText(`34${numberPhone}@c.us`,`Buenas ${name} que tal?\n
     \n
-    Lamentablemente, experimentamos una situación inesperada que nos impidió cumplir con nuestras fechas de envío habituales. Quiero disculparme sinceramente por el retraso en el envío de su producto. Entiendo lo frustrante que puede ser esperar por algo que se ha pagado y esperado con ilusión.\n
+    Lamentamos la demora que arrastra tu pedido, se ha debido a un fallo puntual en fábrica que por fin está solucionado y recibirás las zapatillas en un plazo de 8 días hábiles.
     \n
-    Hemos tomado medidas para asegurarnos de que esto no vuelva a ocurrir en el futuro y estamos trabajando para garantizar que nuestros procesos de envío sean más eficientes.
+    Para compensarte queremos ofrecerte un descuento del 30% en tu próxima compra así como la total libertad de devolver el pedido cuando te llegue y recibir el reembolso del mismo.
     \n
-    Como una forma de remediar la situación, hemos decidido ofreserte un cupón de descuento de 15€ en tus proximas 3 compras. Y a su vez contestar toda duda o inquietud sobre tu actual pedido que en los siguientes días su situación sera normalizada.
-    \n
-    Esperamos que esta solución sea satisfactoria y que podamos seguir teniendo una buena relación comercial. Gracias por su comprensión y paciencia en este asunto.
-    \n
-    Atentamente, El equipo de TaxiZapas`)
+    Gracias por tu comprensión y de nuevo disculpa!`)
   }
 }
